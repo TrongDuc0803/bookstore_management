@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.dgPhieuNhap = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cbSachLoaiSach = new System.Windows.Forms.ComboBox();
@@ -49,13 +49,13 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.numSachSoLuong = new System.Windows.Forms.NumericUpDown();
             this.numSachGiaBan = new System.Windows.Forms.NumericUpDown();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgLoaiSach = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtLoaiSachTenLoaiSach = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnLoaiSachXoa = new System.Windows.Forms.Button();
+            this.btnLoaiSachSua = new System.Windows.Forms.Button();
+            this.btnLoaiSachThem = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -75,7 +75,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.tabControl1.SuspendLayout();
+            this.dgPhieuNhap.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgSach)).BeginInit();
@@ -85,25 +85,25 @@
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numSachSoLuong)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSachGiaBan)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgLoaiSach)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
-            // tabControl1
+            // dgPhieuNhap
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabControl1.Location = new System.Drawing.Point(12, 31);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(965, 506);
-            this.tabControl1.TabIndex = 0;
+            this.dgPhieuNhap.Controls.Add(this.tabPage1);
+            this.dgPhieuNhap.Controls.Add(this.tabPage2);
+            this.dgPhieuNhap.Controls.Add(this.tabPage3);
+            this.dgPhieuNhap.Controls.Add(this.tabPage4);
+            this.dgPhieuNhap.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgPhieuNhap.Location = new System.Drawing.Point(12, 31);
+            this.dgPhieuNhap.Name = "dgPhieuNhap";
+            this.dgPhieuNhap.SelectedIndex = 0;
+            this.dgPhieuNhap.Size = new System.Drawing.Size(965, 506);
+            this.dgPhieuNhap.TabIndex = 0;
             // 
             // tabPage1
             // 
@@ -244,7 +244,7 @@
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.panel2);
-            this.tabPage2.Controls.Add(this.dataGridView1);
+            this.tabPage2.Controls.Add(this.dgLoaiSach);
             this.tabPage2.Location = new System.Drawing.Point(4, 29);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -301,34 +301,34 @@
             this.numSachGiaBan.Size = new System.Drawing.Size(209, 27);
             this.numSachGiaBan.TabIndex = 12;
             // 
-            // dataGridView1
+            // dgLoaiSach
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(4, 6);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(947, 297);
-            this.dataGridView1.TabIndex = 0;
+            this.dgLoaiSach.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgLoaiSach.Location = new System.Drawing.Point(4, 6);
+            this.dgLoaiSach.Name = "dgLoaiSach";
+            this.dgLoaiSach.RowHeadersWidth = 51;
+            this.dgLoaiSach.RowTemplate.Height = 24;
+            this.dgLoaiSach.Size = new System.Drawing.Size(947, 297);
+            this.dgLoaiSach.TabIndex = 0;
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.button1);
-            this.panel2.Controls.Add(this.button2);
-            this.panel2.Controls.Add(this.button3);
+            this.panel2.Controls.Add(this.btnLoaiSachXoa);
+            this.panel2.Controls.Add(this.btnLoaiSachSua);
+            this.panel2.Controls.Add(this.btnLoaiSachThem);
             this.panel2.Controls.Add(this.label6);
-            this.panel2.Controls.Add(this.textBox1);
+            this.panel2.Controls.Add(this.txtLoaiSachTenLoaiSach);
             this.panel2.Location = new System.Drawing.Point(7, 328);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(944, 121);
             this.panel2.TabIndex = 1;
             // 
-            // textBox1
+            // txtLoaiSachTenLoaiSach
             // 
-            this.textBox1.Location = new System.Drawing.Point(151, 15);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(350, 27);
-            this.textBox1.TabIndex = 0;
+            this.txtLoaiSachTenLoaiSach.Location = new System.Drawing.Point(151, 15);
+            this.txtLoaiSachTenLoaiSach.Name = "txtLoaiSachTenLoaiSach";
+            this.txtLoaiSachTenLoaiSach.Size = new System.Drawing.Size(350, 27);
+            this.txtLoaiSachTenLoaiSach.TabIndex = 0;
             // 
             // label6
             // 
@@ -339,32 +339,32 @@
             this.label6.TabIndex = 1;
             this.label6.Text = "Tên loại sách";
             // 
-            // button1
+            // btnLoaiSachXoa
             // 
-            this.button1.Location = new System.Drawing.Point(415, 70);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(86, 29);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Xóa";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnLoaiSachXoa.Location = new System.Drawing.Point(415, 70);
+            this.btnLoaiSachXoa.Name = "btnLoaiSachXoa";
+            this.btnLoaiSachXoa.Size = new System.Drawing.Size(86, 29);
+            this.btnLoaiSachXoa.TabIndex = 5;
+            this.btnLoaiSachXoa.Text = "Xóa";
+            this.btnLoaiSachXoa.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnLoaiSachSua
             // 
-            this.button2.Location = new System.Drawing.Point(242, 70);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(86, 29);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "Sửa";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnLoaiSachSua.Location = new System.Drawing.Point(242, 70);
+            this.btnLoaiSachSua.Name = "btnLoaiSachSua";
+            this.btnLoaiSachSua.Size = new System.Drawing.Size(86, 29);
+            this.btnLoaiSachSua.TabIndex = 4;
+            this.btnLoaiSachSua.Text = "Sửa";
+            this.btnLoaiSachSua.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnLoaiSachThem
             // 
-            this.button3.Location = new System.Drawing.Point(35, 70);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(86, 29);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "Thêm";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnLoaiSachThem.Location = new System.Drawing.Point(35, 70);
+            this.btnLoaiSachThem.Name = "btnLoaiSachThem";
+            this.btnLoaiSachThem.Size = new System.Drawing.Size(86, 29);
+            this.btnLoaiSachThem.TabIndex = 3;
+            this.btnLoaiSachThem.Text = "Thêm";
+            this.btnLoaiSachThem.UseVisualStyleBackColor = true;
             // 
             // panel3
             // 
@@ -473,41 +473,41 @@
             // 
             // btnPhieuNhapXoa
             // 
-            this.btnPhieuNhapXoa.Location = new System.Drawing.Point(582, 120);
+            this.btnPhieuNhapXoa.Location = new System.Drawing.Point(648, 120);
             this.btnPhieuNhapXoa.Name = "btnPhieuNhapXoa";
-            this.btnPhieuNhapXoa.Size = new System.Drawing.Size(86, 29);
+            this.btnPhieuNhapXoa.Size = new System.Drawing.Size(160, 29);
             this.btnPhieuNhapXoa.TabIndex = 9;
             this.btnPhieuNhapXoa.Text = "Xóa";
             this.btnPhieuNhapXoa.UseVisualStyleBackColor = true;
             // 
             // btnPhieuNhapSua
             // 
-            this.btnPhieuNhapSua.Location = new System.Drawing.Point(405, 120);
+            this.btnPhieuNhapSua.Location = new System.Drawing.Point(398, 120);
             this.btnPhieuNhapSua.Name = "btnPhieuNhapSua";
-            this.btnPhieuNhapSua.Size = new System.Drawing.Size(86, 29);
+            this.btnPhieuNhapSua.Size = new System.Drawing.Size(162, 29);
             this.btnPhieuNhapSua.TabIndex = 8;
             this.btnPhieuNhapSua.Text = "Sửa";
             this.btnPhieuNhapSua.UseVisualStyleBackColor = true;
             // 
             // btnPhieuNhapThem
             // 
-            this.btnPhieuNhapThem.Location = new System.Drawing.Point(226, 120);
+            this.btnPhieuNhapThem.Location = new System.Drawing.Point(159, 120);
             this.btnPhieuNhapThem.Name = "btnPhieuNhapThem";
-            this.btnPhieuNhapThem.Size = new System.Drawing.Size(86, 29);
+            this.btnPhieuNhapThem.Size = new System.Drawing.Size(153, 29);
             this.btnPhieuNhapThem.TabIndex = 7;
             this.btnPhieuNhapThem.Text = "Thêm";
             this.btnPhieuNhapThem.UseVisualStyleBackColor = true;
             // 
             // txtPhieuNhapNhaCungCap
             // 
-            this.txtPhieuNhapNhaCungCap.Location = new System.Drawing.Point(666, 10);
+            this.txtPhieuNhapNhaCungCap.Location = new System.Drawing.Point(681, 27);
             this.txtPhieuNhapNhaCungCap.Name = "txtPhieuNhapNhaCungCap";
             this.txtPhieuNhapNhaCungCap.Size = new System.Drawing.Size(262, 27);
             this.txtPhieuNhapNhaCungCap.TabIndex = 5;
             // 
             // dateNgayLapPhieuNhap
             // 
-            this.dateNgayLapPhieuNhap.Location = new System.Drawing.Point(203, 12);
+            this.dateNgayLapPhieuNhap.Location = new System.Drawing.Point(202, 25);
             this.dateNgayLapPhieuNhap.Name = "dateNgayLapPhieuNhap";
             this.dateNgayLapPhieuNhap.Size = new System.Drawing.Size(288, 27);
             this.dateNgayLapPhieuNhap.TabIndex = 4;
@@ -515,7 +515,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(517, 13);
+            this.label11.Location = new System.Drawing.Point(509, 30);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(151, 20);
             this.label11.TabIndex = 1;
@@ -524,7 +524,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(14, 13);
+            this.label12.Location = new System.Drawing.Point(13, 30);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(171, 20);
             this.label12.TabIndex = 0;
@@ -545,11 +545,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1004, 549);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.dgPhieuNhap);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";
-            this.tabControl1.ResumeLayout(false);
+            this.dgPhieuNhap.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -560,7 +560,7 @@
             this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numSachSoLuong)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSachGiaBan)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgLoaiSach)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -574,7 +574,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl dgPhieuNhap;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
@@ -597,11 +597,11 @@
         private System.Windows.Forms.NumericUpDown numSachSoLuong;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox txtLoaiSachTenLoaiSach;
+        private System.Windows.Forms.DataGridView dgLoaiSach;
+        private System.Windows.Forms.Button btnLoaiSachXoa;
+        private System.Windows.Forms.Button btnLoaiSachSua;
+        private System.Windows.Forms.Button btnLoaiSachThem;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TextBox txtHoaDonSDTKH;
         private System.Windows.Forms.TextBox txtHoaDonTenKH;
