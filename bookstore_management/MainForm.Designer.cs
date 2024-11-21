@@ -383,6 +383,7 @@
             this.btnHoaDonXoa.TabIndex = 9;
             this.btnHoaDonXoa.Text = "Xóa";
             this.btnHoaDonXoa.UseVisualStyleBackColor = true;
+            this.btnHoaDonXoa.Click += new System.EventHandler(this.btnHoaDonXoa_Click);
             // 
             // btnHoaDonSua
             // 
@@ -392,6 +393,7 @@
             this.btnHoaDonSua.TabIndex = 8;
             this.btnHoaDonSua.Text = "Sửa";
             this.btnHoaDonSua.UseVisualStyleBackColor = true;
+            this.btnHoaDonSua.Click += new System.EventHandler(this.btnHoaDonSua_Click);
             // 
             // btnHoaDonThem
             // 
@@ -401,6 +403,7 @@
             this.btnHoaDonThem.TabIndex = 7;
             this.btnHoaDonThem.Text = "Thêm";
             this.btnHoaDonThem.UseVisualStyleBackColor = true;
+            this.btnHoaDonThem.Click += new System.EventHandler(this.btnHoaDonThem_Click);
             // 
             // txtHoaDonSDTKH
             // 
@@ -460,6 +463,7 @@
             this.dgHoaDon.RowTemplate.Height = 24;
             this.dgHoaDon.Size = new System.Drawing.Size(948, 285);
             this.dgHoaDon.TabIndex = 0;
+            this.dgHoaDon.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgHoaDon_CellClick);
             // 
             // tabPage4
             // 
@@ -561,7 +565,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1004, 549);
+            this.ClientSize = new System.Drawing.Size(1004, 571);
             this.Controls.Add(this.dgPhieuNhap);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

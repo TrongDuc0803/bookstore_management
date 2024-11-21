@@ -21,6 +21,7 @@ namespace bookstore_management
             LoadLoaiSach(); // Gọi hàm load loại sách vào ComboBox
             LoadSachGrid(); // Gọi hàm load dữ liệu sách vào DataGridView
             LoadLoaiSachGrid(); // Gọi hàm load dữ liệu loại sách vào DataGridView
+            LoadHoaDonGrid();
         }
 
         private void LoadSachGrid()
@@ -77,7 +78,18 @@ namespace bookstore_management
             }
         }
 
-        
+        private void LoadHoaDonGrid()
+        {
+            string query = "SELECT ma_hoa_don AS [Mã Hóa Đơn], ngay_lap AS [Ngày Lập], ten_khach_hang AS [Tên Khách Hàng], sdt_khach_hang AS [SDT Khách Hàng]FROM tbl_hoa_don";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                dgHoaDon.DataSource = dt;
+            }
+        }
+
 
         private void btnSachThem_Click(object sender, EventArgs e)
         {
@@ -139,6 +151,7 @@ namespace bookstore_management
 
                 MessageBox.Show("Thêm loại sách thành công!", "Thông báo");
                 LoadLoaiSachGrid();
+                LoadLoaiSach();
             }
         }
 
@@ -203,6 +216,7 @@ namespace bookstore_management
 
                     MessageBox.Show("Xóa loại sách thành công!", "Thông báo");
                     LoadLoaiSachGrid();
+                    LoadSachGrid(); 
                 }
             }
         }
@@ -302,6 +316,114 @@ namespace bookstore_management
                 txtSachTacGia.Text = row.Cells["tac_gia"].Value.ToString();
                 numSachSoLuong.Value = Convert.ToDecimal(row.Cells["so_luong"].Value);
                 numSachGiaBan.Value = Convert.ToDecimal(row.Cells["gia_ban"].Value);
+            }
+        }
+
+        private void btnHoaDonThem_Click(object sender, EventArgs e)
+        {
+            string ngayLap = dateNgayLapHoaDon.Value.ToString("yyyy-MM-dd");
+            string tenKhachHang = txtHoaDonTenKH.Text.Trim();
+            string sdtKhachHang = txtHoaDonSDTKH.Text.Trim();
+
+            // Kiểm tra thông tin nhập
+            if (string.IsNullOrEmpty(tenKhachHang) || string.IsNullOrEmpty(sdtKhachHang))
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin khách hàng.", "Thông báo");
+                return;
+            }
+
+            string query = "INSERT INTO tbl_hoa_don (ngay_lap, ten_khach_hang, sdt_khach_hang) VALUES (@ngayLap, @tenKhachHang, @sdtKhachHang)";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@ngayLap", ngayLap);
+                command.Parameters.AddWithValue("@tenKhachHang", tenKhachHang);
+                command.Parameters.AddWithValue("@sdtKhachHang", sdtKhachHang);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+
+                MessageBox.Show("Thêm hóa đơn thành công!", "Thông báo");
+                LoadHoaDonGrid(); // Cập nhật lại danh sách
+            }
+        }
+
+        private void btnHoaDonSua_Click(object sender, EventArgs e)
+        {
+            if (dgHoaDon.CurrentRow == null)
+            {
+                MessageBox.Show("Vui lòng chọn hóa đơn cần sửa.", "Thông báo");
+                return;
+            }
+
+            int maHoaDon = int.Parse(dgHoaDon.CurrentRow.Cells["Mã Hóa Đơn"].Value.ToString());
+            string ngayLap = dateNgayLapHoaDon.Value.ToString("yyyy-MM-dd");
+            string tenKhachHang = txtHoaDonTenKH.Text.Trim();
+            string sdtKhachHang = txtHoaDonSDTKH.Text.Trim();
+
+            // Kiểm tra thông tin nhập
+            if (string.IsNullOrEmpty(tenKhachHang) || string.IsNullOrEmpty(sdtKhachHang))
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin khách hàng.", "Thông báo");
+                return;
+            }
+
+            string query = "UPDATE tbl_hoa_don SET ngay_lap = @ngayLap, ten_khach_hang = @tenKhachHang, sdt_khach_hang = @sdtKhachHang WHERE ma_hoa_don = @maHoaDon";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@ngayLap", ngayLap);
+                command.Parameters.AddWithValue("@tenKhachHang", tenKhachHang);
+                command.Parameters.AddWithValue("@sdtKhachHang", sdtKhachHang);
+                command.Parameters.AddWithValue("@maHoaDon", maHoaDon);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+
+                MessageBox.Show("Sửa hóa đơn thành công!", "Thông báo");
+                LoadHoaDonGrid(); // Cập nhật lại danh sách
+            }
+        }
+
+        private void btnHoaDonXoa_Click(object sender, EventArgs e)
+        {
+            if (dgHoaDon.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn hóa đơn cần xóa.", "Thông báo");
+                return;
+            }
+
+            int maHoaDon = int.Parse(dgHoaDon.SelectedRows[0].Cells["Mã Hóa Đơn"].Value.ToString());
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc chắn muốn xóa hóa đơn này không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (dialogResult == DialogResult.Yes)
+            {
+                string query = "DELETE FROM tbl_hoa_don WHERE ma_hoa_don = @maHoaDon";
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@maHoaDon", maHoaDon);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                    MessageBox.Show("Xóa hóa đơn thành công!", "Thông báo");
+                    LoadHoaDonGrid(); // Cập nhật lại danh sách
+                }
+            }
+        }
+
+        private void dgHoaDon_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dgHoaDon.Rows[e.RowIndex];
+                dateNgayLapHoaDon.Value = Convert.ToDateTime(row.Cells["Ngày Lập"].Value);
+                txtHoaDonTenKH.Text = row.Cells["Tên Khách Hàng"].Value.ToString();
+                txtHoaDonSDTKH.Text = row.Cells["SDT Khách Hàng"].Value.ToString();
             }
         }
     }
