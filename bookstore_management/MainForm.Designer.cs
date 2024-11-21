@@ -255,6 +255,7 @@
             // 
             // dgSach
             // 
+            this.dgSach.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgSach.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgSach.Location = new System.Drawing.Point(0, 6);
             this.dgSach.Name = "dgSach";
@@ -336,6 +337,7 @@
             // 
             // dgLoaiSach
             // 
+            this.dgLoaiSach.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgLoaiSach.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgLoaiSach.Location = new System.Drawing.Point(4, 6);
             this.dgLoaiSach.Name = "dgLoaiSach";
@@ -450,6 +452,7 @@
             // 
             // dgHoaDon
             // 
+            this.dgHoaDon.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgHoaDon.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgHoaDon.Location = new System.Drawing.Point(6, 6);
             this.dgHoaDon.Name = "dgHoaDon";
@@ -545,6 +548,7 @@
             // 
             // dataGridView2
             // 
+            this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Location = new System.Drawing.Point(4, 6);
             this.dataGridView2.Name = "dataGridView2";

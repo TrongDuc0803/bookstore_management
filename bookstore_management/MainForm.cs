@@ -14,12 +14,13 @@ namespace bookstore_management
     public partial class MainForm : Form
     {
         private string connectionString = "Data Source=Teomathe;Initial Catalog=db_quan_ly_ban_sach;Integrated Security=True";
+
         public MainForm()
         {
             InitializeComponent();
             LoadLoaiSach(); // Gọi hàm load loại sách vào ComboBox
             LoadSachGrid(); // Gọi hàm load dữ liệu sách vào DataGridView
-            LoadLoaiSachGrid();
+            LoadLoaiSachGrid(); // Gọi hàm load dữ liệu loại sách vào DataGridView
         }
 
         private void LoadSachGrid()
@@ -42,7 +43,6 @@ namespace bookstore_management
             }
         }
 
-        // 2. Hàm Load dữ liệu loại sách vào ComboBox
         private void LoadLoaiSach()
         {
             string query = "SELECT ma_loai_sach, ten_loai_sach FROM tbl_loai_sach";
@@ -74,10 +74,9 @@ namespace bookstore_management
                 DataTable dt = new DataTable();
                 adapter.Fill(dt);
                 dgLoaiSach.DataSource = dt;
-
-
             }
         }
+
         
 
         private void btnSachThem_Click(object sender, EventArgs e)
@@ -87,7 +86,6 @@ namespace bookstore_management
             int soLuong;
             decimal giaBan;
 
-            // Kiểm tra giá trị nhập
             if (string.IsNullOrEmpty(tenSach) ||
                 !int.TryParse(numSachSoLuong.Text, out soLuong) ||
                 !decimal.TryParse(numSachGiaBan.Text, out giaBan) ||
@@ -98,9 +96,8 @@ namespace bookstore_management
                 return;
             }
 
-            int maLoaiSach = int.Parse(cbSachLoaiSach.SelectedValue.ToString()); // Lấy mã loại sách
+            int maLoaiSach = int.Parse(cbSachLoaiSach.SelectedValue.ToString());
 
-            // Câu lệnh SQL thêm sách
             string query = "INSERT INTO tbl_sach (ten_sach, ma_loai_sach, tac_gia, so_luong, gia_ban) VALUES (@tenSach, @maLoaiSach, @tacGia, @soLuong, @giaBan)";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -116,7 +113,106 @@ namespace bookstore_management
                 connection.Close();
 
                 MessageBox.Show("Thêm sách thành công!", "Thông báo");
-                LoadSachGrid(); // Cập nhật lại danh sách
+                LoadSachGrid();
+            }
+        }
+
+        private void btnLoaiSachThem_Click(object sender, EventArgs e)
+        {
+            string tenLoaiSach = txtLoaiSachTenLoaiSach.Text.Trim();
+
+            if (string.IsNullOrEmpty(tenLoaiSach))
+            {
+                MessageBox.Show("Vui lòng nhập tên loại sách.", "Thông báo");
+                return;
+            }
+
+            string query = "INSERT INTO tbl_loai_sach (ten_loai_sach) VALUES (@tenLoaiSach)";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@tenLoaiSach", tenLoaiSach);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+
+                MessageBox.Show("Thêm loại sách thành công!", "Thông báo");
+                LoadLoaiSachGrid();
+            }
+        }
+
+        private void btnLoaiSachSua_Click(object sender, EventArgs e)
+        {
+            if (dgLoaiSach.CurrentRow == null)
+            {
+                MessageBox.Show("Vui lòng chọn loại sách cần sửa.", "Thông báo");
+                return;
+            }
+
+            int maLoaiSach = int.Parse(dgLoaiSach.CurrentRow.Cells["Mã loại sách"].Value.ToString());
+            string tenLoaiSach = txtLoaiSachTenLoaiSach.Text.Trim();
+
+            if (string.IsNullOrEmpty(tenLoaiSach))
+            {
+                MessageBox.Show("Vui lòng nhập tên loại sách.", "Thông báo");
+                return;
+            }
+
+            string query = "UPDATE tbl_loai_sach SET ten_loai_sach = @tenLoaiSach WHERE ma_loai_sach = @maLoaiSach";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@tenLoaiSach", tenLoaiSach);
+                command.Parameters.AddWithValue("@maLoaiSach", maLoaiSach);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+
+                MessageBox.Show("Sửa loại sách thành công!", "Thông báo");
+                LoadLoaiSachGrid();
+            }
+        }
+
+        private void btnLoaiSachXoa_Click(object sender, EventArgs e)
+        {
+            if (dgLoaiSach.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn loại sách cần xóa.", "Thông báo");
+                return;
+            }
+
+            int maLoaiSach = int.Parse(dgLoaiSach.SelectedRows[0].Cells["Mã loại sách"].Value.ToString());
+
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc chắn muốn xóa loại sách này không? Lưu ý: Các sách liên quan cũng sẽ bị xóa.",
+                                                        "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (dialogResult == DialogResult.Yes)
+            {
+                string query = "DELETE FROM tbl_loai_sach WHERE ma_loai_sach = @maLoaiSach";
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@maLoaiSach", maLoaiSach);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                    MessageBox.Show("Xóa loại sách thành công!", "Thông báo");
+                    LoadLoaiSachGrid();
+                }
+            }
+        }
+
+        private void dgLoaiSach_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0) // Đảm bảo rằng dòng được chọn là hợp lệ
+            {
+                DataGridViewRow row = dgLoaiSach.Rows[e.RowIndex];
+                txtLoaiSachTenLoaiSach.Text = row.Cells["Tên loại sách"].Value.ToString(); // Sử dụng alias nếu có
             }
         }
 
@@ -133,7 +229,7 @@ namespace bookstore_management
             int soLuong;
             decimal giaBan;
 
-            // Kiểm tra thông tin hợp lệ
+            // Kiểm tra dữ liệu nhập
             if (string.IsNullOrEmpty(tenSach) ||
                 !int.TryParse(numSachSoLuong.Text, out soLuong) ||
                 !decimal.TryParse(numSachGiaBan.Text, out giaBan) ||
@@ -147,7 +243,6 @@ namespace bookstore_management
             int maLoaiSach = int.Parse(cbSachLoaiSach.SelectedValue.ToString());
             int maSach = int.Parse(dgSach.CurrentRow.Cells["ma_sach"].Value.ToString()); // Lấy mã sách từ dòng được chọn
 
-            // Câu lệnh SQL cập nhật
             string query = "UPDATE tbl_sach SET ten_sach = @tenSach, ma_loai_sach = @maLoaiSach, tac_gia = @tacGia, so_luong = @soLuong, gia_ban = @giaBan WHERE ma_sach = @maSach";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -177,7 +272,7 @@ namespace bookstore_management
             }
 
             int maSach = int.Parse(dgSach.SelectedRows[0].Cells["ma_sach"].Value.ToString());
-            DialogResult dialogResult = MessageBox.Show("Bạn có chắc chắn muốn xóa sách này không?", "Xác nhận", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc chắn muốn xóa sách này không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (dialogResult == DialogResult.Yes)
             {
@@ -192,147 +287,22 @@ namespace bookstore_management
                     connection.Close();
 
                     MessageBox.Show("Xóa sách thành công!", "Thông báo");
-                    LoadSachGrid();
+                    LoadSachGrid(); // Cập nhật lại danh sách
                 }
             }
         }
 
         private void dgSach_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0) // Đảm bảo dòng được chọn hợp lệ
+            if (e.RowIndex >= 0) // Đảm bảo rằng dòng được chọn là hợp lệ
             {
                 DataGridViewRow row = dgSach.Rows[e.RowIndex];
                 txtSachTenSach.Text = row.Cells["ten_sach"].Value.ToString();
-                cbSachLoaiSach.Text = row.Cells["ten_loai_sach"].Value.ToString();
+                cbSachLoaiSach.Text = row.Cells["ten_loai_sach"].Value.ToString(); // Loại sách hiển thị tên, không phải mã
                 txtSachTacGia.Text = row.Cells["tac_gia"].Value.ToString();
                 numSachSoLuong.Value = Convert.ToDecimal(row.Cells["so_luong"].Value);
                 numSachGiaBan.Value = Convert.ToDecimal(row.Cells["gia_ban"].Value);
             }
         }
-
-        
-
-        private void btnLoaiSachSua_Click(object sender, EventArgs e)
-        {
-            if (dgLoaiSach.CurrentRow == null) // Kiểm tra xem có dòng nào được chọn không
-            {
-                MessageBox.Show("Vui lòng chọn loại sách cần sửa.", "Thông báo");
-                return;
-            }
-
-            // Lấy thông tin từ DataGridView
-            int maLoaiSach = int.Parse(dgLoaiSach.CurrentRow.Cells["Mã loại sách"].Value.ToString()); // Sử dụng bí danh
-            string tenLoaiSach = txtLoaiSachTenLoaiSach.Text.Trim();
-
-            // Kiểm tra thông tin nhập
-            if (string.IsNullOrEmpty(tenLoaiSach))
-            {
-                MessageBox.Show("Vui lòng nhập tên loại sách.", "Thông báo");
-                return;
-            }
-
-            string query = "UPDATE tbl_loai_sach SET ten_loai_sach = @tenLoaiSach WHERE ma_loai_sach = @maLoaiSach";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@tenLoaiSach", tenLoaiSach);
-                command.Parameters.AddWithValue("@maLoaiSach", maLoaiSach);
-
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
-
-                MessageBox.Show("Sửa loại sách thành công!", "Thông báo");
-                LoadLoaiSachGrid(); // Cập nhật lại danh sách
-            }
-        }
-
-        private void btnLoaiSachXoa_Click(object sender, EventArgs e)
-        {
-            if (dgLoaiSach.SelectedRows.Count == 0) // Kiểm tra xem có dòng nào được chọn không
-            {
-                MessageBox.Show("Vui lòng chọn loại sách cần xóa.", "Thông báo");
-                return;
-            }
-
-            // Lấy `ma_loai_sach` từ dòng được chọn
-            int maLoaiSach = int.Parse(dgLoaiSach.SelectedRows[0].Cells["Mã loại sách"].Value.ToString()); // Sử dụng bí danh nếu bạn dùng trong LoadLoaiSachGrid
-
-            // Hiển thị hộp thoại xác nhận
-            DialogResult dialogResult = MessageBox.Show("Bạn có chắc chắn muốn xóa loại sách này không? Lưu ý: Các sách liên quan cũng sẽ bị xóa.",
-                                                        "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-            if (dialogResult == DialogResult.Yes)
-            {
-                // Câu lệnh SQL xóa loại sách
-                string query = "DELETE FROM tbl_loai_sach WHERE ma_loai_sach = @maLoaiSach";
-
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@maLoaiSach", maLoaiSach);
-
-                    try
-                    {
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                        connection.Close();
-
-                        MessageBox.Show("Xóa loại sách thành công!", "Thông báo");
-                        LoadLoaiSachGrid(); // Cập nhật lại danh sách
-                    }
-                    catch (SqlException ex)
-                    {
-                        // Xử lý nếu có lỗi ràng buộc khóa ngoại
-                        if (ex.Number == 547) // Mã lỗi 547: Lỗi ràng buộc khóa ngoại
-                        {
-                            MessageBox.Show("Không thể xóa loại sách này vì nó đang được sử dụng trong bảng khác.",
-                                            "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Đã xảy ra lỗi khi xóa loại sách: " + ex.Message,
-                                            "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                }
-            }
-        }
-
-        private void dgLoaiSach_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0) // Đảm bảo dòng được chọn hợp lệ
-            {
-                DataGridViewRow row = dgLoaiSach.Rows[e.RowIndex];
-                txtLoaiSachTenLoaiSach.Text = row.Cells["Tên loại sách"].Value.ToString(); // Sử dụng bí danh
-            }
-        }
-
-        private void btnLoaiSachThem_Click(object sender, EventArgs e)
-        {
-            string tenLoaiSach = txtLoaiSachTenLoaiSach.Text.Trim();
-
-            // Kiểm tra thông tin nhập
-            if (string.IsNullOrEmpty(tenLoaiSach))
-            {
-                MessageBox.Show("Vui lòng nhập tên loại sách.", "Thông báo");
-                return;
-            }
-
-            string query = "INSERT INTO tbl_loai_sach (ten_loai_sach) VALUES (@tenLoaiSach)";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@tenLoaiSach", tenLoaiSach);
-
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
-
-                MessageBox.Show("Thêm loại sách thành công!", "Thông báo");
-                LoadLoaiSachGrid(); // Cập nhật lại danh sách
-            }
-        }
     }
 }
-
